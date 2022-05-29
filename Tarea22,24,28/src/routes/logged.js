@@ -21,13 +21,9 @@ router.use(session({
 }))
 
 router.get('/', (req, res) => {
-    const {user} = req.session
-    console.log(user)
-    if(user === undefined) {
-        res.redirect('/login')
-    } else {
-        res.sendFile('/public/logged.html', { root: __dirname })
-    }
+    const user = req.session.user
+    if(user) return res.sendFile('/public/logged.html', { root: __dirname })
+    res.redirect('/login')
 })
 
 export default router

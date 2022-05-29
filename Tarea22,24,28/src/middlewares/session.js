@@ -2,11 +2,12 @@ import express from "express"
 import session from "express-session"
 import cookieParser from "cookie-parser"
 import MongoStore from "connect-mongo"
+import dotenv from "dotenv"
+dotenv.config()
+const app = express()
 
-const router = express.Router()
-
-router.use(cookieParser())
-router.use(session({
+app.use(cookieParser())
+app.use(session({
     saveUninitialized:false,
     resave:false,
     secret:"12345",
@@ -19,12 +20,3 @@ router.use(session({
     }
 }))
 
-
-router.get('/', (req, res) => {
-    req.session.destroy( err => {
-        if(err) return res.send({message:error, status: 'error'})
-        res.redirect('/')
-    } )
-})
-
-export default router

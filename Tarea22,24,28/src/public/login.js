@@ -1,6 +1,3 @@
-console.log("login js")
-
-
 /* LOGIN.HTML */
 
 const registerForm = document.getElementById('registerForm')
@@ -27,9 +24,6 @@ registerForm.addEventListener('submit', (e) => {
     
 })
 
-
-
-/* LOGGED.HTML */
 
 
 
