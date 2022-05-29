@@ -48,8 +48,8 @@ passport.use('login', new LocalStrategy(
         try {
             const [userFound] = await userModel.find({username})
             const [passFound] = await userModel.find({password})
-            if(!bcrypt.compare(password, userFound.password)) return done(null, false, {error:'error en contraseña'})
             if(userFound && passFound) {
+                if(!bcrypt.compare(password, userFound.password)) return done(null, false, {error:'error en contraseña'})
                 done(null, userFound)
             } else {
                 done(null, false, {message:'no llegó'})
