@@ -9,11 +9,12 @@ import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import './middlewares/passport.js'
 import './middlewares/session.js'
-
-
+import parsedArgs from "minimist"
 
 const app = express()
-const server = app.listen(8080, () => console.log('Escuchando en puerto 8080'))
+const argumentos = parsedArgs(process.argv.slice(2))
+const PORT = parseInt(argumentos.PORT) || 8080
+const server = app.listen(PORT, () => console.log(`Escuchando en puerto ${PORT}`))
 /* MIDDLEWARES AND SESSION */
 export const __dirname = dirname(fileURLToPath(import.meta.url));
 export const io = new Server(server)
@@ -28,3 +29,16 @@ app.use('/login', loginRouter )
 app.use('/logged', loggedRouter )
 app.use('/logout', logoutRouter)
 app.use('/signup', signupRouter)
+console.log(process);
+
+app.get('/info', (req, res) => {
+    res.json({
+        path:process.execPath,
+        nodeVersion:process.version,
+        platform:process.platform,
+        memoria:process.memoryUsage().rss,
+        processId:process.pid,
+        title:process.title,
+        random:process.uptime()
+    })
+})
